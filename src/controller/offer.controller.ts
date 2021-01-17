@@ -25,17 +25,17 @@ export class OfferController {
   }
 
   @Post('offers')
-  createOffer(@Body() offerDTO: OfferDTO) {
+  createOffer(@Body() offerDTO: OfferDTO): string {
     return this.offerService.createOffer();
   }
 
   @Delete('offers/:id')
-  deleteOffer(@Param('id') id: string) {
+  deleteOffer(@Param('id') id: string): string {
     return this.offerService.deleteOffer(id);
   }
 
   @Patch('offers/:id')
-  updateOffer(@Body() offerDTO: OfferDTO, @Param('id') id: string) {
+  updateOffer(@Body() offerDTO: OfferDTO, @Param('id') id: string): string {
     return this.offerService.updateOffer(id);
   }
 }

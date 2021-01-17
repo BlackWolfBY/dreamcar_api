@@ -14,11 +14,11 @@ export class OfferService {
     return 'Было создано новое предложение.';
   }
 
-  deleteOffer(id): string {
+  deleteOffer(id: string): string {
     return 'Предложение ' + id + ' было удалено.';
   }
 
-  updateOffer(id): string {
+  updateOffer(id: string): string {
     return 'Предложение ' + id + ' было изменено.';
   }
 }
