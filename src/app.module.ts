@@ -5,17 +5,15 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './service/app.service';
-import { StockRequest } from './model/stock.request.model';
-import { AppController } from './controller/app.controller';
+import { OfferService } from './service/offer.service';
+import { StockRequestService } from './service/stock.request.service';
 import { OfferController } from './controller/offer.controller';
-import { StockRequest } from './model/request.model';
+import { StockRequestController } from './controller/stock.request.controller';
+import { StockRequest } from './model/stock.request.model';
 import { Offer } from './model/offer.model';
 import { Role } from './model/role.model';
 import { User } from './model/user.model';
 import { RoleFunction } from './model/function.model';
-import { StockRequestService } from './service/stock.request.service';
-import { StockRequestController } from './controller/stock.request.controller';
-import { OfferService } from './service/offer.service';
 
 @Module({
   imports: [
