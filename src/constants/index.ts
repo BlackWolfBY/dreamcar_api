@@ -1,1 +1,1 @@
-export { StockRequestStatus } from './stock.request.status'
+export { StockRequestStatus } from './stock.request.status';
