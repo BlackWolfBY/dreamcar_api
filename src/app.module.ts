@@ -5,11 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './service/app.service';
 import { AppController } from './controller/app.controller';
+import { OfferController } from './controller/offer.controller';
 import { StockRequest } from './model/request.model';
 import { Offer } from './model/offer.model';
 import { Role } from './model/role.model';
 import { User } from './model/user.model';
 import { RoleFunction } from './model/function.model';
+import { OfferService } from './service/offer.service';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { RoleFunction } from './model/function.model';
     }),
     TypeOrmModule.forFeature([StockRequest, Offer, Role, User, RoleFunction]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, OfferController],
+  providers: [AppService, OfferService],
 })
 export class AppModule {}
