@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './controller/app.controller';
-import { RequestsModule } from './model/request.module';
 
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './service/app.service';
-import { StockRequest } from './model/request.model';
+import { StockRequest } from './model/stock.request.model';
 import { Offer } from './model/offer.model';
 import { Role } from './model/role.model';
 import { User } from './model/user.model';
 import { RoleFunction } from './model/function.model';
+import { StockRequestService } from './service/stock.request.service';
+import { StockRequestController } from './controller/stock.request.controller';
 
 @Module({
   imports: [
-    RequestsModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       entities: [__dirname + '/**/*.model{.ts,.js}'],
@@ -27,7 +27,7 @@ import { RoleFunction } from './model/function.model';
     }),
     TypeOrmModule.forFeature([StockRequest, Offer, Role, User, RoleFunction]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, StockRequestController],
+  providers: [AppService, StockRequestService],
 })
 export class AppModule {}

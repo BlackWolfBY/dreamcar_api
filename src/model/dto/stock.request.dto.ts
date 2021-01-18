@@ -1,10 +1,9 @@
-import { RequestStatus } from "../attribute/request.status"
+import { StockRequestStatus } from "../../constants"
 
-
-export class Request {
+export class StockRequestDto {
 
     id: string
-    status: RequestStatus
+    status: StockRequestStatus
     partName: string
     amount: number
     description: string
@@ -13,5 +12,5 @@ export class Request {
     createdBy: string
     updatedAt: Date
     updatedBy: string
-
+    
 }
