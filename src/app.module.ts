@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controller/app.controller';
-
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppService } from './service/app.service';
 import { OfferService } from './service/offer.service';
 import { StockRequestService } from './service/stock.request.service';
 import { OfferController } from './controller/offer.controller';
@@ -29,7 +26,7 @@ import { RoleFunction } from './model/function.model';
     }),
     TypeOrmModule.forFeature([StockRequest, Offer, Role, User, RoleFunction]),
   ],
-  controllers: [AppController, OfferController, StockRequestController],
-  providers: [AppService, OfferService, StockRequestService],
+  controllers: [OfferController, StockRequestController],
+  providers: [OfferService, StockRequestService],
 })
 export class AppModule {}
