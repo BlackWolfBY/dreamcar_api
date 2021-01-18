@@ -9,7 +9,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { StockRequestDto } from 'src/model/dto/stock.request.dto';
+import { StockRequestDto } from 'src/dto/stock.request.dto';
 import { StockRequestService } from 'src/service/stock.request.service';
 
 @Controller('requests')

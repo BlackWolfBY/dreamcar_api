@@ -1,4 +1,4 @@
-import { StockRequestStatus } from '../../constants';
+import { StockRequestStatus } from '../constants';
 
 export class StockRequestDto {
   id: string;

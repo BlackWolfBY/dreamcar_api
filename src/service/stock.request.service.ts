@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { StockRequestDto } from 'src/model/dto/stock.request.dto';
+import { StockRequestDto } from 'src/dto/stock.request.dto';
 
 @Injectable()
 export class StockRequestService {
