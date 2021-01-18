@@ -1,4 +1,14 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ObjectID,
+  ObjectIdColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+import { StockRequestStatus } from 'src/constants';
 
 @Entity('requests')
 export class StockRequest {
@@ -6,7 +16,7 @@ export class StockRequest {
   id: ObjectID;
 
   @Column({ nullable: false })
-  status: string;
+  status: StockRequestStatus;
 
   @Column({ nullable: false })
   partName: string;
@@ -15,20 +25,25 @@ export class StockRequest {
   amount: number;
 
   @Column({ length: 200 })
-  decription: string;
+  description: string;
 
   @Column({ nullable: false })
   expiredAt: Date;
 
-  @Column({ type: 'timestamp' })
+  @CreateDateColumn()
   createdAt: Date;
 
   @Column()
   createdBy: string;
 
-  @Column({ type: 'timestamp' })
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column()
   updatedBy: string;
+
+  @BeforeInsert()
+  beforeCreateActions() {
+    if (!this.status) this.status = StockRequestStatus.OPEN;
+  }
 }

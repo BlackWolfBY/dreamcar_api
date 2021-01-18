@@ -1,4 +1,14 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ObjectID,
+  ObjectIdColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+import { OfferStatus } from 'src/constants';
 
 @Entity('offers')
 export class Offer {
@@ -6,7 +16,7 @@ export class Offer {
   id: ObjectID;
 
   @Column({ nullable: false })
-  status: string;
+  status: OfferStatus;
 
   @Column({ nullable: false })
   requestId: string;
@@ -17,15 +27,20 @@ export class Offer {
   @Column({ length: 200 })
   decription: string;
 
-  @Column({ type: 'timestamp' })
+  @CreateDateColumn()
   createdAt: Date;
 
   @Column()
   createdBy: string;
 
-  @Column({ type: 'timestamp' })
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column()
   updatedBy: string;
+
+  @BeforeInsert()
+  beforeCreateActions() {
+    if (!this.status) this.status = OfferStatus.OPEN;
+  }
 }
