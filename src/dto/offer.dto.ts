@@ -1,10 +1,11 @@
-import { IsDate, IsEnum, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
+import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Length } from 'class-validator';
 import { OfferStatus } from 'src/constants';
 
 export class OfferDTO {
 
   @IsString()
   @IsOptional()
+  @IsNotEmpty()
   readonly id: string;
 
   @IsEnum(OfferStatus)
@@ -18,9 +19,11 @@ export class OfferDTO {
   @IsNumber()
   @IsPositive()
   @IsOptional()
+  @IsNotEmpty()
   price: number;
 
   @IsString()
+  @Length(0, 200)
   @IsOptional()
   description: string;
 
