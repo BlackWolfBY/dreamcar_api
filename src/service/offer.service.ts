@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { OfferDTO } from 'src/dto/offer.dto';
 
 @Injectable()
 export class OfferService {
@@ -10,7 +11,7 @@ export class OfferService {
     return 'getOfferByID ' + id;
   }
 
-  createOffer(): string {
+  createOffer(offerDTO: OfferDTO): string {
     return 'Было создано новое предложение.';
   }
 

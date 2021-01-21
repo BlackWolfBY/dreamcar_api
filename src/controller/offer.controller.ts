@@ -3,7 +3,10 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -20,21 +23,25 @@ export class OfferController {
   }
 
   @Get('offers/:id')
+  @HttpCode(HttpStatus.OK) 
   getOfferByID(@Param('id') id: string): string {
     return this.offerService.getOfferByID(id);
   }
 
   @Post('offers')
+  @HttpCode(HttpStatus.OK) 
   createOffer(@Body() offerDTO: OfferDTO): string {
-    return this.offerService.createOffer();
+    return this.offerService.createOffer(offerDTO);
   }
 
   @Delete('offers/:id')
+  @HttpCode(HttpStatus.OK) 
   deleteOffer(@Param('id') id: string): string {
     return this.offerService.deleteOffer(id);
   }
 
   @Patch('offers/:id')
+  @HttpCode(HttpStatus.OK) 
   updateOffer(@Body() offerDTO: OfferDTO, @Param('id') id: string): string {
     return this.offerService.updateOffer(id);
   }

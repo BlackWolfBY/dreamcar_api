@@ -26,10 +26,6 @@ export class StockRequestService {
     return `Request with id ${id} is updated`;
   }
 
-  draft(id: string): string {
-    return `Request with id ${id} is drafted`;
-  }
-
   close(id: string): string {
     return `Request with id ${id} is closed`;
   }
