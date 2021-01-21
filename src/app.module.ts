@@ -11,6 +11,11 @@ import { Offer } from './model/offer.model';
 import { Role } from './model/role.model';
 import { User } from './model/user.model';
 import { RoleFunction } from './model/function.model';
+import { OfferMapper } from './mapper/offer.mapper';
+import { StockRequestMapper } from './mapper/stock.request.mapper';
+
+const SERVICES = [OfferService, StockRequestService];
+const MAPPERS = [OfferMapper, StockRequestMapper];
 
 @Module({
   imports: [
@@ -27,6 +32,6 @@ import { RoleFunction } from './model/function.model';
     TypeOrmModule.forFeature([StockRequest, Offer, Role, User, RoleFunction]),
   ],
   controllers: [OfferController, StockRequestController],
-  providers: [OfferService, StockRequestService],
+  providers: [...MAPPERS, ...SERVICES],
 })
 export class AppModule {}
