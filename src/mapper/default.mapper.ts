@@ -4,15 +4,17 @@ import { AbstractMapper } from './abstract.mapper';
 
 export class DefaultMapper<E, D> implements AbstractMapper<E, D> {
   constructor(
-    private readonly enityClass: ClassConstructor<E>,
-    private readonly dtoClass: ClassConstructor<D>,
+    protected readonly enityClass: ClassConstructor<E>,
+    protected readonly dtoClass: ClassConstructor<D>,
   ) {
     this.toDto = this.toDto.bind(this);
     this.toEntity = this.toEntity.bind(this);
   }
 
   toDto(entity: E): D {
-    return plainToClass(this.dtoClass, entity);
+    return plainToClass(this.dtoClass, entity, {
+      excludeExtraneousValues: true,
+    });
   }
 
   toEntity(dto: D): E {
