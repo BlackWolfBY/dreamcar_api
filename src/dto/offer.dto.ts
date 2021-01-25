@@ -5,41 +5,34 @@ export class OfferDTO {
 
   @IsString()
   @IsOptional()
-  @IsNotEmpty()
   readonly id: string;
 
   @IsEnum(OfferStatus)
-  @IsOptional()
+  @IsNotEmpty()
   status: OfferStatus;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   readonly requestId: string;
 
   @IsNumber()
   @IsPositive()
-  @IsOptional()
   @IsNotEmpty()
   price: number;
 
   @IsString()
   @Length(0, 200)
-  @IsOptional()
   description: string;
 
   @IsDate()
-  @IsOptional()
   createdAt: Date;
 
   @IsString()
-  @IsOptional()
   createdBy: string;
 
   @IsDate()
-  @IsOptional()
   updatedAt: Date;
 
   @IsString()
-  @IsOptional()
   updatedBy: string;
 }
