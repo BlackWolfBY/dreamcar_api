@@ -40,11 +40,6 @@ export class StockRequestController {
     return this.stockRequestsService.update(id, stockRequestDto);
   }
 
-  @Patch(':id/draft')
-  draft(@Param('id') id: string): string {
-    return this.stockRequestsService.draft(id);
-  }
-
   @Patch(':id/close')
   close(@Param('id') id: string): string {
     return this.stockRequestsService.close(id);
