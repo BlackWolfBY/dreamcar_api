@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { StockRequestDto } from 'src/dto/stock.request.dto';
 
 @Injectable()
@@ -23,10 +23,10 @@ export class StockRequestService {
   }
 
   update(id: string, stockRequestDto: StockRequestDto): string {
-    return `Request with id ${id} is updated`;
+    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
   }
 
   close(id: string): string {
-    return `Request with id ${id} is closed`;
+    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
   }
 }

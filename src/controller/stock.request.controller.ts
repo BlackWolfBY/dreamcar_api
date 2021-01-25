@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Param,
   Patch,
@@ -14,6 +15,8 @@ import { StockRequestService } from 'src/service/stock.request.service';
 
 @Controller('requests')
 export class StockRequestController {
+  private static readonly ID_PATH = 'id';
+
   constructor(private readonly stockRequestsService: StockRequestService) {}
 
   @Get()
@@ -21,9 +24,16 @@ export class StockRequestController {
     return this.stockRequestsService.getAll();
   }
 
-  @Get(':id')
+  @Get(`:${StockRequestController.ID_PATH}`)
   getById(@Param('id') id: string): StockRequestDto {
-    return this.stockRequestsService.getById(id);
+    const request = this.stockRequestsService.getById(id);
+    if (request) {
+      return request;
+    } else
+      throw new HttpException(
+        `No request with ID ${id} was found`,
+        HttpStatus.NOT_FOUND,
+      );
   }
 
   @Post()
@@ -32,16 +42,30 @@ export class StockRequestController {
     return this.stockRequestsService.create(stockRequestDto);
   }
 
-  @Put(':id')
+  @Put(`:${StockRequestController.ID_PATH}`)
   update(
-    @Param('id') id: string,
+    @Param(StockRequestController.ID_PATH) id: string,
     @Body() stockRequestDto: StockRequestDto,
   ): string {
-    return this.stockRequestsService.update(id, stockRequestDto);
+    const request = this.stockRequestsService.update(id, stockRequestDto);
+    if (request) {
+      return `Request with id ${id} was updated`;
+    } else
+      throw new HttpException(
+        `No request with ID ${id} was found`,
+        HttpStatus.NOT_FOUND,
+      );
   }
 
-  @Patch(':id/close')
-  close(@Param('id') id: string): string {
-    return this.stockRequestsService.close(id);
+@Patch(`:${StockRequestController.ID_PATH}/close`)
+  close(@Param(StockRequestController.ID_PATH) id: string): string {
+    const request = this.stockRequestsService.close(id);
+    if (request) {
+      return `Request with id ${id} was closed`;
+    } else
+      throw new HttpException(
+        `No request with ID ${id} was found`,
+        HttpStatus.NOT_FOUND,
+      );
   }
 }
