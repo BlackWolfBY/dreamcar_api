@@ -13,7 +13,11 @@ import { OfferStatus } from 'src/constants';
 @Entity('offers')
 export class Offer {
   @ObjectIdColumn()
-  id: ObjectID;
+  _id: ObjectID;
+
+  get id(): string {
+    return this._id.toString();
+  }
 
   @Column({ nullable: false })
   status: OfferStatus;
@@ -25,7 +29,7 @@ export class Offer {
   price: number;
 
   @Column({ length: 200 })
-  decription: string;
+  description: string;
 
   @CreateDateColumn()
   createdAt: Date;

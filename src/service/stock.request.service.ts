@@ -23,14 +23,10 @@ export class StockRequestService {
   }
 
   update(id: string, stockRequestDto: StockRequestDto): string {
-    return `Request with id ${id} is updated`;
-  }
-
-  draft(id: string): string {
-    return `Request with id ${id} is drafted`;
+    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
   }
 
   close(id: string): string {
-    return `Request with id ${id} is closed`;
+    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
   }
 }

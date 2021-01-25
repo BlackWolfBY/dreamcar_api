@@ -13,7 +13,11 @@ import { StockRequestStatus } from 'src/constants';
 @Entity('requests')
 export class StockRequest {
   @ObjectIdColumn()
-  id: ObjectID;
+  _id: ObjectID;
+
+  get id(): string {
+    return this._id.toString();
+  }
 
   @Column({ nullable: false })
   status: StockRequestStatus;
