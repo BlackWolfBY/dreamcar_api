@@ -57,19 +57,7 @@ export class StockRequestController {
       );
   }
 
-  @Patch(`:${StockRequestController.ID_PATH}/draft`)
-  draft(@Param(StockRequestController.ID_PATH) id: string): string {
-    const request = this.stockRequestsService.draft(id);
-    if (request) {
-      return `Request with id ${id} was drafted`;
-    } else
-      throw new HttpException(
-        `No request with ID ${id} was found`,
-        HttpStatus.NOT_FOUND,
-      );
-  }
-
-  @Patch(`:${StockRequestController.ID_PATH}/close`)
+@Patch(`:${StockRequestController.ID_PATH}/close`)
   close(@Param(StockRequestController.ID_PATH) id: string): string {
     const request = this.stockRequestsService.close(id);
     if (request) {

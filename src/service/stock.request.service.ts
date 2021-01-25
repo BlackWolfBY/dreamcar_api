@@ -26,10 +26,6 @@ export class StockRequestService {
     return this.stockRequests.find((stockRequest) => stockRequest.id === id);
   }
 
-  draft(id: string): string {
-    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
-  }
-
   close(id: string): string {
     return this.stockRequests.find((stockRequest) => stockRequest.id === id);
   }

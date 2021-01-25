@@ -25,7 +25,7 @@ export class Offer {
   price: number;
 
   @Column({ length: 200 })
-  decription: string;
+  description: string;
 
   @CreateDateColumn()
   createdAt: Date;
