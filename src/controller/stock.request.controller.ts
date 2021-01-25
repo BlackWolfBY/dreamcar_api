@@ -57,7 +57,7 @@ export class StockRequestController {
       );
   }
 
-@Patch(`:${StockRequestController.ID_PATH}/close`)
+  @Patch(`:${StockRequestController.ID_PATH}/close`)
   close(@Param(StockRequestController.ID_PATH) id: string): string {
     const request = this.stockRequestsService.close(id);
     if (request) {

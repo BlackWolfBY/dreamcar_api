@@ -1,8 +1,16 @@
-import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Length } from 'class-validator';
+import {
+  IsDate,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  Length,
+} from 'class-validator';
 import { OfferStatus } from 'src/constants';
 
 export class OfferDTO {
-
   @IsString()
   @IsOptional()
   readonly id: string;
