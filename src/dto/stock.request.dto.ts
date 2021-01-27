@@ -38,7 +38,8 @@ export class StockRequestDto {
   @IsNotEmpty()
   @IsDate()
   @Type(() => Date)
-  expireAt: Date;
+  @Expose()
+  expiredAt: Date;
 
   @Expose()
   createdAt: Date;
