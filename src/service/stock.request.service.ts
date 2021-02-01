@@ -22,9 +22,8 @@ export class StockRequestService {
 
   async getById(id: string): Promise<StockRequestDto> {
     const requestToGet = await this.requestRepository.findOne(id);
-    if (requestToGet) {
-      return this.mapper.toDto(requestToGet);
-    } else return null;
+    if (!requestToGet) return null;
+    else return this.mapper.toDto(requestToGet);
   }
 
   async create(stockRequestDto: StockRequestDto): Promise<StockRequestDto> {
@@ -38,21 +37,25 @@ export class StockRequestService {
     stockRequestDto: StockRequestDto,
   ): Promise<StockRequestDto> {
     const requestToUpdate = await this.requestRepository.findOne(id);
-    if (requestToUpdate) {
-      const newValues = this.mapper.toEntity(stockRequestDto);
-      for (const value in newValues) requestToUpdate[value] = newValues[value];
-      this.requestRepository.save(requestToUpdate);
+    if (!requestToUpdate) return null;
+    else {
+      const updatedRequest = this.requestRepository.merge(
+        requestToUpdate,
+        this.mapper.toEntity(stockRequestDto),
+      );
+      this.requestRepository.save(updatedRequest);
       return this.mapper.toDto(requestToUpdate);
-    } else return null;
+    }
   }
 
   async close(id: string): Promise<StockRequestDto> {
     const requestToClose = await this.requestRepository.findOne(id);
-    if (requestToClose) {
+    if (!requestToClose) return null;
+    else {
       requestToClose.status = StockRequestStatus.CLOSE;
       this.requestRepository.save(requestToClose);
       return this.mapper.toDto(requestToClose);
-    } else return null;
+    }
   }
 
   // deleteAll(): string {

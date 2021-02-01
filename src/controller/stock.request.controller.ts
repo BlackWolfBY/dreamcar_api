@@ -4,23 +4,21 @@ import {
   // Delete,
   Get,
   HttpCode,
-  HttpException,
   HttpStatus,
   Param,
   Patch,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { StockRequestDto } from 'src/dto/stock.request.dto';
 import { StockRequestService } from 'src/service/stock.request.service';
+import { RequestNotFoundException } from 'src/exception/stock.requestNotFound.exception';
+import { RequestErrorsInterceptor } from 'src/interceptor/stock.request.errors.interceptor';
 
 @Controller('requests')
 export class StockRequestController {
   private static readonly ID_PATH = 'id';
-  private static readonly wrong_id_lenth =
-    'Request ID should be 24 characters in length.';
-  private static readonly id_not_found = 'Request with such ID was not found.';
-
   constructor(private readonly stockRequestsService: StockRequestService) {}
 
   @Get()
@@ -29,21 +27,13 @@ export class StockRequestController {
   }
 
   @Get(`:${StockRequestController.ID_PATH}`)
+  @UseInterceptors(RequestErrorsInterceptor)
   async getById(@Param('id') id: string): Promise<StockRequestDto> {
-    if (id.length != 24) {
-      throw new HttpException(
-        `${StockRequestController.wrong_id_lenth}`,
-        HttpStatus.NOT_ACCEPTABLE,
-      );
-    }
     const request = await this.stockRequestsService.getById(id);
-    if (request) {
-      return request;
+    if (!request) {
+      throw new RequestNotFoundException(id);
     } else {
-      throw new HttpException(
-        `${StockRequestController.id_not_found}`,
-        HttpStatus.NOT_FOUND,
-      );
+      return request;
     }
   }
 
@@ -54,45 +44,29 @@ export class StockRequestController {
   }
 
   @Put(`:${StockRequestController.ID_PATH}`)
+  @UseInterceptors(RequestErrorsInterceptor)
   async update(
     @Param(StockRequestController.ID_PATH) id: string,
     @Body() stockRequestDto: StockRequestDto,
   ): Promise<StockRequestDto> {
-    if (id.length != 24) {
-      throw new HttpException(
-        `${StockRequestController.wrong_id_lenth}`,
-        HttpStatus.NOT_ACCEPTABLE,
-      );
-    }
     const request = await this.stockRequestsService.update(id, stockRequestDto);
-    if (request) {
-      return request;
+    if (!request) {
+      throw new RequestNotFoundException(id);
     } else {
-      throw new HttpException(
-        `${StockRequestController.id_not_found}`,
-        HttpStatus.NOT_FOUND,
-      );
+      return request;
     }
   }
 
   @Patch(`:${StockRequestController.ID_PATH}/close`)
+  @UseInterceptors(RequestErrorsInterceptor)
   async close(
     @Param(StockRequestController.ID_PATH) id: string,
   ): Promise<StockRequestDto> {
-    if (id.length != 24) {
-      throw new HttpException(
-        `${StockRequestController.wrong_id_lenth}`,
-        HttpStatus.NOT_ACCEPTABLE,
-      );
-    }
     const request = await this.stockRequestsService.close(id);
-    if (request) {
-      return request;
+    if (!request) {
+      throw new RequestNotFoundException(id);
     } else {
-      throw new HttpException(
-        `${StockRequestController.id_not_found}`,
-        HttpStatus.NOT_FOUND,
-      );
+      return request;
     }
   }
 
