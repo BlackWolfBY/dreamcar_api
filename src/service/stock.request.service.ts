@@ -1,32 +1,65 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { StockRequestDto } from 'src/dto/stock.request.dto';
+import { Repository } from 'typeorm';
+import { StockRequest } from 'src/model/stock.request.model';
+import { StockRequestMapper } from 'src/mapper/stock.request.mapper';
+import { StockRequestStatus } from 'src/constants';
 
 @Injectable()
 export class StockRequestService {
-  private stockRequests = [];
+  constructor(
+    @InjectRepository(StockRequest)
+    private requestRepository: Repository<StockRequest>,
+    private readonly mapper: StockRequestMapper,
+  ) {}
 
-  getAll() {
-    return this.stockRequests;
+  async getAll(): Promise<StockRequestDto[]> {
+    return this.requestRepository
+      .find()
+      .then((data) => data.map(this.mapper.toDto));
   }
 
-  getById(id: string) {
-    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
+  async getById(id: string): Promise<StockRequestDto> {
+    const requestToGet = await this.requestRepository.findOne(id);
+    if (!requestToGet) return null;
+    else return this.mapper.toDto(requestToGet);
   }
 
-  create(stockRequestDto: StockRequestDto): StockRequestDto {
-    const newStockRequest = {
-      ...stockRequestDto,
-      id: Date.now().toString(),
-    };
-    this.stockRequests.push(newStockRequest);
-    return newStockRequest;
+  async create(stockRequestDto: StockRequestDto): Promise<StockRequestDto> {
+    return this.requestRepository
+      .save(this.mapper.toEntity(stockRequestDto))
+      .then((data) => this.mapper.toDto(data));
   }
 
-  update(id: string, stockRequestDto: StockRequestDto): string {
-    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
+  async update(
+    id: string,
+    stockRequestDto: StockRequestDto,
+  ): Promise<StockRequestDto> {
+    const requestToUpdate = await this.requestRepository.findOne(id);
+    if (!requestToUpdate) return null;
+    else {
+      const updatedRequest = this.requestRepository.merge(
+        requestToUpdate,
+        this.mapper.toEntity(stockRequestDto),
+      );
+      this.requestRepository.save(updatedRequest);
+      return this.mapper.toDto(requestToUpdate);
+    }
   }
 
-  close(id: string): string {
-    return this.stockRequests.find((stockRequest) => stockRequest.id === id);
+  async close(id: string): Promise<StockRequestDto> {
+    const requestToClose = await this.requestRepository.findOne(id);
+    if (!requestToClose) return null;
+    else {
+      requestToClose.status = StockRequestStatus.CLOSE;
+      this.requestRepository.save(requestToClose);
+      return this.mapper.toDto(requestToClose);
+    }
   }
+
+  // deleteAll(): string {
+  //   this.requestRepository.clear();
+  //   return `Requests were deleted`;
+  // }
 }
