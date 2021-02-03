@@ -44,7 +44,7 @@ export class StockRequestService {
         this.mapper.toEntity(stockRequestDto),
       );
       this.requestRepository.save(updatedRequest);
-      return this.mapper.toDto(requestToUpdate);
+      return this.mapper.toDto(updatedRequest);
     }
   }
 
