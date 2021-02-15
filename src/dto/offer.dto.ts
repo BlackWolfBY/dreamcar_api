@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 
 import { OfferStatus } from 'src/constants';
 
@@ -40,6 +40,7 @@ export class OfferDTO {
   @Expose()
   description: string;
 
+  @Type(() => Date)
   @IsDate()
   @Expose()
   createdAt: Date;
@@ -48,6 +49,7 @@ export class OfferDTO {
   @Expose()
   createdBy: string;
 
+  @Type(() => Date)
   @IsDate()
   @Expose()
   updatedAt: Date;
