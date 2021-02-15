@@ -46,11 +46,9 @@ export class OfferService {
       .findOne(offerDTO.id)
       .then((offer) => {
         const updatedFields = this.offerMapper.toEntity(offerDTO);
-        for (const value in updatedFields) {
-          offer[value] = updatedFields[value];
-        }
-        return this.offerRepository.save(offer);
+        const updatedEntity = this.offerRepository.merge(offer, updatedFields);
+        return this.offerRepository.save(updatedEntity);
       })
-      .then((offer) => this.offerMapper.toDto(offer));
+      .then((updatedOffer) => this.offerMapper.toDto(updatedOffer));
   }
 }
