@@ -3,8 +3,6 @@ import { Expose, Type } from 'class-transformer';
 import { OfferStatus } from 'src/constants';
 
 import {
-  IsDate,
-  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -19,8 +17,6 @@ export class OfferDTO {
   @Expose()
   readonly id: string;
 
-  @IsEnum(OfferStatus)
-  @IsNotEmpty()
   @Expose()
   status: OfferStatus;
 
@@ -29,31 +25,31 @@ export class OfferDTO {
   @Expose()
   readonly requestId: string;
 
+  @IsNotEmpty()
+  @Type(() => Number)
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
   @Expose()
   price: number;
 
+  @IsOptional()
   @IsString()
   @Length(0, 200)
   @Expose()
   description: string;
 
-  @Type(() => Date)
-  @IsDate()
   @Expose()
   createdAt: Date;
 
+  @IsOptional()
   @IsString()
   @Expose()
   createdBy: string;
 
-  @Type(() => Date)
-  @IsDate()
   @Expose()
   updatedAt: Date;
 
+  @IsOptional()
   @IsString()
   @Expose()
   updatedBy: string;
