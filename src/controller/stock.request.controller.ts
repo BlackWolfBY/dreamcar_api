@@ -11,12 +11,15 @@ import {
   Put,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+
 import { StockRequestDto } from 'src/dto/stock.request.dto';
 import { StockRequestService } from 'src/service/stock.request.service';
 import { RequestNotFoundException } from 'src/exception/stock.requestNotFound.exception';
 import { RequestErrorsInterceptor } from 'src/interceptor/stock.request.errors.interceptor';
 
 @Controller('requests')
+@ApiTags('requests')
 export class StockRequestController {
   private static readonly ID_PATH = 'id';
   constructor(private readonly stockRequestsService: StockRequestService) {}
