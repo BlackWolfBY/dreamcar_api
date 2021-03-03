@@ -3,8 +3,6 @@ import { Expose, Type } from 'class-transformer';
 import { OfferStatus } from 'src/constants';
 
 import {
-  IsDate,
-  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -38,13 +36,15 @@ export class OfferDTO {
   readonly requestId: string;
 
   @ApiProperty({ required: true, minimum: 0 })
+  @IsNotEmpty()
+  @Type(() => Number)
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
   @Expose()
   price: number;
 
   @ApiProperty({ minimum: 0, maximum: 200 })
+  @IsOptional()
   @IsString()
   @Length(0, 200)
   @Expose()
@@ -57,6 +57,10 @@ export class OfferDTO {
   createdAt: Date;
 
   @ApiProperty()
+  @Expose()
+  createdAt: Date;
+
+  @IsOptional()
   @IsString()
   @Expose()
   createdBy: string;
@@ -68,6 +72,10 @@ export class OfferDTO {
   updatedAt: Date;
 
   @ApiProperty()
+  @Expose()
+  updatedAt: Date;
+
+  @IsOptional()
   @IsString()
   @Expose()
   updatedBy: string;
