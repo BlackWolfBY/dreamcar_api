@@ -9,6 +9,8 @@ import {
   IsPositive,
   IsString,
   Length,
+  IsDate,
+  IsEnum,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -56,10 +58,6 @@ export class OfferDTO {
   @Expose()
   createdAt: Date;
 
-  @ApiProperty()
-  @Expose()
-  createdAt: Date;
-
   @IsOptional()
   @IsString()
   @Expose()
@@ -68,10 +66,6 @@ export class OfferDTO {
   @ApiProperty()
   @Type(() => Date)
   @IsDate()
-  @Expose()
-  updatedAt: Date;
-
-  @ApiProperty()
   @Expose()
   updatedAt: Date;
 
