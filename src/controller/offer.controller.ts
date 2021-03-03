@@ -7,10 +7,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+
 import { OfferDTO } from 'src/dto/offer.dto';
 import { OfferService } from '../service/offer.service';
 
 @Controller('offers')
+@ApiTags('offers')
 export class OfferController {
   private static readonly ID_PATH = 'id';
 
